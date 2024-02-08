@@ -11,25 +11,27 @@ public class GameMasterScript : MonoBehaviour
 {
     [Header("Game Parameters")]
     public int timePerTarget = 60;
+    public float timeOutMalus = -0.1f;
     public double timeLimit = -1;
     public float targetMinDistance = 10f;
     public float targetMaxDistance = 15f;
 
     [Header("UI")]
-    public float uiHorizontalDistance = 0.8f;
-    public float uiHeight = 0.6f;
+    public float uiHorizontalDistance = 0.9f;
+    public float uiHeight = 0.8f;
     public float viewUiAngle = 0.1f;
 
     [Header("Scene objects")]
     public Target targetPrefab;
     public GameObject uiCanvas;
-    public GameObject scoreText;
+    public TextMeshProUGUI uiText;
+    public TextMeshProUGUI timeText;
     public GameObject mainCamera;
     public GameObject cannon;
 
-    int score;
-    float totalElapsedTime, currentTargetTime;
-    bool isGameRunning;
+    int nbMisses;
+    float score, currentTargetTime, totalElapsedTime;
+    bool isGameRunning, lastTargetTimedOut;
     Target target;
 
     void Start()
@@ -41,26 +43,47 @@ public class GameMasterScript : MonoBehaviour
     
     void Update()
     {
-        if (!isGameRunning) {
+        totalElapsedTime += Time.deltaTime;
+        if (!isGameRunning) {  // End of the game
             if (!target.IsDestroyed()) {
                 Destroy(target.gameObject);
-                print("target turned off");
+                print("target destroyed");
             }
             else {
-                print("target supposedly destroyed");
+                // print("target supposedly destroyed");
             }
-            scoreText.GetComponent<TextMeshProUGUI>().SetText("Final score : " + score);
+            uiText.SetText("Final score : " + score);
 
-        }
-        else if (timeLimit != -1 && Time.realtimeSinceStartup > timeLimit) {
+        }  // Time reached the limit, ends the game
+        else if (timeLimit != -1 && totalElapsedTime > timeLimit) {
             isGameRunning = false;
         }
-        else {
+        else {  // Game running = Main Loop
             currentTargetTime += Time.deltaTime;
+            uiText.SetText("Total time : " + string.Format("{0:N1}", totalElapsedTime) 
+                + "s \nCurrent score : " + score
+                + "\nMisses : " + nbMisses);
             if (currentTargetTime > timePerTarget) {
                 Destroy(target.gameObject);
-                print("out of time!");
+                print("Out of time! Target disappeared!");
                 createTarget();
+                lastTargetTimedOut = true;
+                nbMisses++;
+                score += timeOutMalus;
+            }
+            else if (lastTargetTimedOut && currentTargetTime < 3) {
+                timeText.SetText("Too slow! Target disappeared!\nAnother appeared, don't waste time!");
+            }
+            else {
+                if (timePerTarget - currentTargetTime < 5) {
+                    timeText.color = new Color(1, 0, 0);
+                }
+                else {
+                    timeText.color = new Color(1, 1, 1);
+
+                }
+                timeText.SetText(string.Format("{0:N1}", timePerTarget - currentTargetTime) + "s remaining before the target disappears!");
+
             }
         }
 
@@ -80,16 +103,16 @@ public class GameMasterScript : MonoBehaviour
     void scoreChanged()
     {
         score++;
-        print("super ! score = " + score);
-        scoreText.GetComponent<TextMeshProUGUI>().SetText("Current score : " + score);
+        print("scored! score = " + score);
         createTarget();
+        lastTargetTimedOut = false;
     }
 
     void createTarget()
     {
         Vector3 randomDirection = new Vector3(Random.Range(-1f, 1f), Random.Range(0f, 1f), Random.Range(-1f, 1f)).normalized;
         float distance = Random.Range(targetMinDistance, targetMaxDistance);
-        print("dir " + randomDirection + ", dist " + distance);
+        // print("dir " + randomDirection + ", dist " + distance);
         Vector3 newTargetPosition = cannon.transform.position + randomDirection * distance;
         target = Instantiate(targetPrefab, newTargetPosition, Quaternion.identity);
         target.scored.AddListener(scoreChanged);
