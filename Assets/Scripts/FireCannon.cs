@@ -6,26 +6,29 @@ public class FireCannon : MonoBehaviour
     public Rigidbody cannonBallPrefab;
     public float fireSpeed;
 
-    public Transform cannonBallSpawnPoint; // Reference to the spawn point
+    public Transform cannonBallSpawnPoint; 
+    private PowderLoading powderLoading; 
 
     void Start()
     {
-        if (cannonBallSpawnPoint == null)
-        {
-            Debug.LogError("CannonBallSpawnPoint not assigned! Assign it in the inspector.");
-        }
-
         XRSimpleInteractable interactable = GetComponent<XRSimpleInteractable>();
         interactable.selectEntered.AddListener(OnSelectEnter);
+
+        powderLoading = FindObjectOfType<PowderLoading>(); 
+        enabled = false;
     }
 
     void OnSelectEnter(SelectEnterEventArgs args)
     {
         Fire();
+        enabled = false;
     }
 
-    void Fire()
+    public void Fire()
     {
+        if (!enabled)
+            return;
+
         // Instantiate the cannon ball
         Rigidbody newBall = Instantiate(cannonBallPrefab, cannonBallSpawnPoint.position, cannonBallSpawnPoint.rotation);
 
@@ -33,7 +36,7 @@ public class FireCannon : MonoBehaviour
         newBall.velocity = cannonBallSpawnPoint.forward * fireSpeed;
     }
 
-    void OnDrawGizmos()
+/*    void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
 
@@ -41,10 +44,5 @@ public class FireCannon : MonoBehaviour
         {
             Gizmos.DrawSphere(cannonBallSpawnPoint.position, 0.1f);
         }
-    }
-
-    void Update()
-    {
-        // Additional logic can be added here if needed
-    }
+    }*/
 }
