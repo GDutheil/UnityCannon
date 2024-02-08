@@ -4,13 +4,13 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using System;
 
-public class RotateCannon : MonoBehaviour
+public class HorizontalCannonRotation : MonoBehaviour
 {
     public GameObject rotator;
     public Transform leftController;
     public float rotateSpeed, thresholdAngle;
     private XRSimpleInteractable interactable;
-    private Vector3 grabDirection, controllerDirection, cannonDirection;
+    private Vector3 grabDirection, controllerDirection, controllerPosition, cannonDirection, cannonPosition;
     private Quaternion currentRot;
     private Vector3 startPos;
     private bool offsetSet;
@@ -25,24 +25,23 @@ public class RotateCannon : MonoBehaviour
 
     void OnSelectEnter(SelectEnterEventArgs args)
     {
-        // grabDirection = args.interactableObject.transform.position - args.interactorObject.transform.position;
-
-        // print("grab dir : " + grabDirection);
-        // print("controller dir : " + args.interactorObject.transform.forward);
     }
 
     void SetOffsets()
     {
         if (offsetSet)
             return;
-        startPos = Vector3.Normalize(leftController.transform.position - transform.position);
+        controllerPosition = leftController.transform.position;
+        controllerPosition.y = 0;
+        cannonPosition = transform.position;
+        cannonPosition.y = 0;
+        startPos = Vector3.Normalize(controllerPosition - cannonPosition);
         currentRot = rotator.transform.rotation;
-        print("start point : " + startPos);
+        // print("start point : " + startPos);
 
         offsetSet = true;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (interactable.isSelected)

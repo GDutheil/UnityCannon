@@ -2799,12 +2799,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88f63e60a1e49a9458792ff171fdd8ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timePerTarget: 10
+  timeLimit: -1
+  targetMinDistance: 10
+  targetMaxDistance: 15
+  uiHorizontalDistance: 0.8
+  uiHeight: 0.6
+  viewUiAngle: 0.1
   targetPrefab: {fileID: 8717906661941486094, guid: 651406bd92e2b0a488e961a65b4b3c4b,
     type: 3}
   uiCanvas: {fileID: 1749539299}
   scoreText: {fileID: 534433339}
   mainCamera: {fileID: 1026749422}
-  uiPosition: {x: 0, y: 1, z: 1}
+  cannon: {fileID: 919132147834679750}
 --- !u!1001 &386802671
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4402,7 +4409,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: '
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
