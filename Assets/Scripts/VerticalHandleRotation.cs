@@ -38,9 +38,9 @@ public class VerticalHandleRotation : MonoBehaviour
             //print(lastHandToHandle);
             HandleToHand = projectOnRotationPlane(controllerTransform.position) - transform.position;
             //HandleToHand = projectOnRotationPlane(HandleToHand);
-            float deltaAngle = Vector3.SignedAngle(HandleToHand, lastHandleToHand, transform.forward);
+            float deltaAngle = -Vector3.SignedAngle(HandleToHand, lastHandleToHand, transform.forward);
             //float deltaAngle = Vector3.Angle(HandleToHand, lastHandleToHand);
-            print(deltaAngle);
+            // print(deltaAngle);
             lastHandleToHand = HandleToHand;
             accAngle += deltaAngle;
             controlFloat.inputRotation = accAngle / 4;
