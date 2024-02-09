@@ -69,7 +69,7 @@ public class VerticalHandleRotation : MonoBehaviour
         return worldRelative;
     }
 
-    private void OnDrawGizmos()
+    /*private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawRay(transform.position, HandleToHand);
@@ -77,6 +77,5 @@ public class VerticalHandleRotation : MonoBehaviour
         Gizmos.DrawRay(transform.position, lastHandleToHand);
         Gizmos.color = Color.blue;
         Gizmos.DrawRay(transform.position, transform.forward);
-    }
-
+    }*/
 }

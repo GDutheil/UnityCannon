@@ -49,9 +49,6 @@ public class GameMasterScript : MonoBehaviour
                 Destroy(target.gameObject);
                 print("target destroyed");
             }
-            else {
-                // print("target supposedly destroyed");
-            }
             uiText.SetText("Final score : " + score);
 
         }  // Time reached the limit, ends the game
@@ -61,7 +58,7 @@ public class GameMasterScript : MonoBehaviour
         else {  // Game running = Main Loop
             currentTargetTime += Time.deltaTime;
             uiText.SetText("Total time : " + string.Format("{0:N1}", totalElapsedTime) 
-                + "s \nCurrent score : " + score
+                + "s \nCurrent score : " + string.Format("{0:N1}", score)
                 + "\nMisses : " + nbMisses);
             if (currentTargetTime > timePerTarget) {
                 Destroy(target.gameObject);
@@ -80,7 +77,6 @@ public class GameMasterScript : MonoBehaviour
                 }
                 else {
                     timeText.color = new Color(1, 1, 1);
-
                 }
                 timeText.SetText(string.Format("{0:N1}", timePerTarget - currentTargetTime) + "s remaining before the target disappears!");
 
@@ -103,7 +99,7 @@ public class GameMasterScript : MonoBehaviour
     void scoreChanged()
     {
         score++;
-        print("scored! score = " + score);
+        print("Scored! score = " + score);
         createTarget();
         lastTargetTimedOut = false;
     }
@@ -112,7 +108,6 @@ public class GameMasterScript : MonoBehaviour
     {
         Vector3 randomDirection = new Vector3(Random.Range(-1f, 1f), Random.Range(0f, 1f), Random.Range(-1f, 1f)).normalized;
         float distance = Random.Range(targetMinDistance, targetMaxDistance);
-        // print("dir " + randomDirection + ", dist " + distance);
         Vector3 newTargetPosition = cannon.transform.position + randomDirection * distance;
         target = Instantiate(targetPrefab, newTargetPosition, Quaternion.identity);
         target.scored.AddListener(scoreChanged);

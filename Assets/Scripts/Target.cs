@@ -8,10 +8,8 @@ public class Target : MonoBehaviour
     
     void OnCollisionEnter(Collision other)
     {
-
-        Debug.Log(gameObject.name + " collided with " + other.collider.name);
         Disintegrate();
-        Score();
+        scored.Invoke();
     }
 
     void Disintegrate()
@@ -30,11 +28,5 @@ public class Target : MonoBehaviour
         // Destroy the original target
         Destroy(gameObject);
         Destroy(brokenTarget, 3f);
-
-    }
-
-    void Score()
-    {
-        scored.Invoke();
     }
 }

@@ -5,8 +5,9 @@ public class FireCannon : MonoBehaviour
 {
     public Rigidbody cannonBallPrefab;
     public float fireSpeed;
-
     public Transform cannonBallSpawnPoint; 
+    public ParticleSystem cannonSmoke;
+
     private PowderLoading powderLoading; 
 
     void Start()
@@ -34,9 +35,11 @@ public class FireCannon : MonoBehaviour
 
         // Give a velocity to the new ball (in the direction the spawn point is facing)
         newBall.velocity = cannonBallSpawnPoint.forward * fireSpeed;
+
+        cannonSmoke.Play();
     }
 
-/*    void OnDrawGizmos()
+    /*void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
 
