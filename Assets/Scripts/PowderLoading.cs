@@ -6,7 +6,6 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class PowderLoading : MonoBehaviour
 {
     public float sphereRadius = 0.2f;
-    public float spillAngle = 50f;
     public FireCannon fireCannon;
     public ParticleSystem powderParticle;
     private XRGrabInteractable grabInteractable;
