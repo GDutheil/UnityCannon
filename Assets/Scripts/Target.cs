@@ -1,15 +1,15 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Target : MonoBehaviour
 {
     public GameObject targetBrokenPrefab;  // Prefab of the broken target parts
-
+    public UnityEvent scored;
+    
     void OnCollisionEnter(Collision other)
     {
-
-        Debug.Log(gameObject.name + " collided with " + other.collider.name);
         Disintegrate();
- 
+        scored.Invoke();
     }
 
     void Disintegrate()
@@ -28,6 +28,5 @@ public class Target : MonoBehaviour
         // Destroy the original target
         Destroy(gameObject);
         Destroy(brokenTarget, 3f);
-
     }
 }

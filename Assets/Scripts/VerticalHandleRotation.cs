@@ -38,9 +38,9 @@ public class VerticalHandleRotation : MonoBehaviour
             //print(lastHandToHandle);
             HandleToHand = projectOnRotationPlane(controllerTransform.position) - transform.position;
             //HandleToHand = projectOnRotationPlane(HandleToHand);
-            float deltaAngle = Vector3.SignedAngle(HandleToHand, lastHandleToHand, transform.forward);
+            float deltaAngle = -Vector3.SignedAngle(HandleToHand, lastHandleToHand, transform.forward);
             //float deltaAngle = Vector3.Angle(HandleToHand, lastHandleToHand);
-            print(deltaAngle);
+            // print(deltaAngle);
             lastHandleToHand = HandleToHand;
             accAngle += deltaAngle;
             controlFloat.inputRotation = accAngle / 4;
@@ -69,7 +69,7 @@ public class VerticalHandleRotation : MonoBehaviour
         return worldRelative;
     }
 
-    private void OnDrawGizmos()
+    /*private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawRay(transform.position, HandleToHand);
@@ -77,6 +77,5 @@ public class VerticalHandleRotation : MonoBehaviour
         Gizmos.DrawRay(transform.position, lastHandleToHand);
         Gizmos.color = Color.blue;
         Gizmos.DrawRay(transform.position, transform.forward);
-    }
-
+    }*/
 }
