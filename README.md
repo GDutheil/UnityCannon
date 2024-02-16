@@ -2,6 +2,12 @@
 
 Membres : Robin Lotode, Guillaume Dutheil, Albane Papillon
 
+## Setup
+
+Ouvrir la scène Main.
+
+Installer Text Pro Essentials quand invité à l'ouverture de la scène Main.
+
 ## Fonctionnalités présentées à la dernière séance + Remarques
 
 * Rotation horitontale : OK
@@ -19,5 +25,10 @@ Membres : Robin Lotode, Guillaume Dutheil, Albane Papillon
 ## Fonctionnalités ajoutées durant la semaine suivante
 
 * Effet visuel de fumée quand le canon tire
-* Effet visuel de poudre quand on penche le gobelet à plus de 90°
-* Intéraction gobelet de poudre / canon uniquement si le gobelet est penché à plus de 90°
+* Effet visuel de poudre quand on penche le gobelet à plus de 90° : uniquement au simulateur VR, problème avec le casque
+* Intéraction gobelet de poudre / canon uniquement si le gobelet est penché à plus de 90° : uniquement au simulateur VR, problème avec le casque
+
+Fichiers démonstrations dans le projet :
+
+- Target hit.mkv
+- Target miss.mkv
